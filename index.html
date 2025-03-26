@@ -220,6 +220,16 @@
                 min-width: 100%;
             }
         }
+
+        /* Previous CSS remains the same, with minor additions: */
+        .stakeholder-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .stakeholder-input input {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -535,7 +545,7 @@
             document.getElementById(`section-${next}`).classList.add('active');
             
             // Update progress bar
-            document.getElementById('progress-bar').style.width = `${next * 25}%`;
+            document.getElementById('progress-bar').style.width = `${next * 20}%`;
         }
         
         function prevSection(current, prev) {
@@ -545,7 +555,7 @@
             document.getElementById(`section-${prev}`).classList.add('active');
             
             // Update progress bar
-            document.getElementById('progress-bar').style.width = `${prev * 25}%`;
+            document.getElementById('progress-bar').style.width = `${prev * 20}%`;
         }
         
         // Form submission
