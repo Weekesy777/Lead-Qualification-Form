@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Software Development Inquiry</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --success-color: #10b981;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 6px;
+            background: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .form-section.active {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-section h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-section h2 span {
+            background: var(--primary-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-inner {
+            height: 100%;
+            background: var(--primary-color);
+            width: 25%;
+            transition: width 0.3s ease;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .radio-label {
+            display: block;
+            padding: 15px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .radio-label:hover {
+            border-color: var(--accent-color);
+        }
+        
+        input[type="radio"] {
+            display: none;
+        }
+        
+        input[type="radio"]:checked + .radio-label {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-group {
+            margin-top: 10px;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .thanks-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .thanks-message h2 {
+            color: var(--success-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .radio-option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="progress-bar"></div>
+        </div>
+        
+        <form id="qualification-form">
+            <!-- Section 1: Basic Info -->
+            <div class="form-section active" id="section-1">
+                <h2><span>1</span>Tell us about you</h2>
+                <div class="form-group">
+                    <label for="name">Full Name*</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company Name*</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Your Role*</label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="C-Suite">C-Level Executive</option>
+                        <option value="VP">VP / Director</option>
+                        <option value="Manager">Manager</option>
+                        <option value="IT">IT Professional</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-nav">
+                    <div></div>
+                    <button type="button" class="btn" onclick="nextSection(1, 2)">Continue</button>
+                </div>
+            </div>
+            
+            <!-- Section 2: Company Details -->
+            <div class="form-section hidden" id="section-2">
+                <h2><span>2</span>Tell us about your business</h2>
+                <div class="form-group">
+                    <label for="industry">Industry*</label>
+                    <select id="industry" name="industry" required>
+                        <option value="" disabled selected>Select your industry</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Education">Education</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Financial">Financial Services</option>
+                        <option value="Logistics">Logistics & Transportation</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Company Size (Annual Revenue)*</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="company_size" id="size-1" value="Under $500k" required>
+                            <label for="size-1" class="radio-label">Under $500k</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="company_size" id="size-2" value="$500k - $1M" required>
+                            <label for="size-2" class="radio-label">$500k - $1M</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="company_size" id="size-3" value="$1M - $5M" required>
+                            <label for="size-3" class="radio-label">$1M - $5M</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="company_size" id="size-4" value="$5M - $20M" required>
+                            <label for="size-4" class="radio-label">$5M - $20M</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="company_size" id="size-5" value="$20M+" required>
+                            <label for="size-5" class="radio-label">$20M+</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-nav">
+                    <button type="button" class="btn btn-outline" onclick="prevSection(2, 1)">Back</button>
+                    <button type="button" class="btn" onclick="nextSection(2, 3)">Continue</button>
+                </div>
+            </div>
+            
+            <!-- Section 3: Project Details -->
+            <div class="form-section hidden" id="section-3">
+                <h2><span>3</span>Tell us about your project</h2>
+                <div class="form-group">
+                    <label>What type of software development are you looking for?*</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="project_type" id="type-1" value="One-time Project" required>
+                            <label for="type-1" class="radio-label">One-time Project</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="project_type" id="type-2" value="Ongoing Service Agreement" required>
+                            <label for="type-2" class="radio-label">Ongoing Service Agreement</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="project_type" id="type-3" value="Not Sure Yet" required>
+                            <label for="type-3" class="radio-label">Not Sure Yet</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="timeline">Expected Timeline*</label>
+                    <select id="timeline" name="timeline" required>
+                        <option value="" disabled selected>Select timeline</option>
+                        <option value="Under 3 months">Under 3 months</option>
+                        <option value="3-6 months">3-6 months</option>
+                        <option value="6-12 months">6-12 months</option>
+                        <option value="12+ months">12+ months</option>
+                        <option value="Not sure">Not sure yet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Approximate Budget Range*</label>
+                    <select id="budget" name="budget" required>
+                        <option value="" disabled selected>Select budget range</option>
+                        <option value="Under $50k">Under $50k</option>
+                        <option value="$50k - $100k">$50k - $100k</option>
+                        <option value="$100k - $200k">$100k - $200k</option>
+                        <option value="$200k - $500k">$200k - $500k</option>
+                        <option value="$500k+">$500k+</option>
+                        <option value="Not sure">Not determined yet</option>
+                    </select>
+                </div>
+                <div class="form-nav">
+                    <button type="button" class="btn btn-outline" onclick="prevSection(3, 2)">Back</button>
+                    <button type="button" class="btn" onclick="nextSection(3, 4)">Continue</button>
+                </div>
+            </div>
+            
+            <!-- Section 4: Technical Details -->
+            <div class="form-section hidden" id="section-4">
+                <h2><span>4</span>Tell us about your technical needs</h2>
+                <div class="form-group">
+                    <label>Current Situation*</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="current_situation" id="situation-1" value="No existing software" required>
+                            <label for="situation-1" class="radio-label">Starting from scratch</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="current_situation" id="situation-2" value="Existing software needs updating" required>
+                            <label for="situation-2" class="radio-label">Existing software needs updating</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="current_situation" id="situation-3" value="Moving from off-the-shelf" required>
+                            <label for="situation-3" class="radio-label">Moving from off-the-shelf solution</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>What technologies are you interested in? (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="tech-1" name="technologies" value=".NET/C#">
+                            <label for="tech-1">.NET/C#</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="tech-2" name="technologies" value="React">
+                            <label for="tech-2">React</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="tech-3" name="technologies" value="SQL Database">
+                            <label for="tech-3">SQL Database</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="tech-4" name="technologies" value="Not Sure">
+                            <label for="tech-4">Not sure - need recommendations</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Briefly describe your project needs*</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="decision_timeline">Decision-making Timeline*</label>
+                    <select id="decision_timeline" name="decision_timeline" required>
+                        <option value="" disabled selected>Select timeline</option>
+                        <option value="Immediate">Immediately</option>
+                        <option value="1-4 weeks">1-4 weeks</option>
+                        <option value="1-3 months">1-3 months</option>
+                        <option value="3+ months">3+ months</option>
+                        <option value="Just researching">Just researching options</option>
+                    </select>
+                </div>
+                <div class="form-nav">
+                    <button type="button" class="btn btn-outline" onclick="prevSection(4, 3)">Back</button>
+                    <button type="submit" class="btn">Submit Inquiry</button>
+                </div>
+            </div>
+            
+            <!-- Thank You Message -->
+            <div class="form-section hidden" id="thanks-section">
+                <div class="thanks-message">
+                    <h2>Thank You!</h2>
+                    <p>We've received your inquiry and will be in touch soon to discuss your custom software development needs.</p>
+                    <p>One of our specialists will contact you within 1 business day.</p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Form navigation
+        function nextSection(current, next) {
+            // Validate current section
+            const currentSection = document.getElementById(`section-${current}`);
+            const inputs = currentSection.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const radioGroup = currentSection.querySelectorAll(`input[name="${input.name}"]`);
+                    const checked = Array.from(radioGroup).some(radio => radio.checked);
+                    if (!checked) {
+                        isValid = false;
+                        // Find the label for this radio group
+                        const label = currentSection.querySelector(`label[for="${input.id}"]`) || 
+                                    currentSection.querySelector('label');
+                        if (label) {
+                            label.style.color = 'red';
+                        }
+                    }
+                } else if (!input.value) {
+                    isValid = false;
+                    input.style.borderColor = 'red';
+                }
+            });
+            
+            if (!isValid) {
+                return;
+            }
+            
+            // Reset styles
+            inputs.forEach(input => {
+                if (input.type !== 'radio') {
+                    input.style.borderColor = '';
+                }
+            });
+            const labels = currentSection.querySelectorAll('label');
+            labels.forEach(label => {
+                label.style.color = '';
+            });
+            
+            // Move to next section
+            document.getElementById(`section-${current}`).classList.remove('active');
+            document.getElementById(`section-${current}`).classList.add('hidden');
+            document.getElementById(`section-${next}`).classList.remove('hidden');
+            document.getElementById(`section-${next}`).classList.add('active');
+            
+            // Update progress bar
+            document.getElementById('progress-bar').style.width = `${next * 25}%`;
+        }
+        
+        function prevSection(current, prev) {
+            document.getElementById(`section-${current}`).classList.remove('active');
+            document.getElementById(`section-${current}`).classList.add('hidden');
+            document.getElementById(`section-${prev}`).classList.remove('hidden');
+            document.getElementById(`section-${prev}`).classList.add('active');
+            
+            // Update progress bar
+            document.getElementById('progress-bar').style.width = `${prev * 25}%`;
+        }
+        
+        // Form submission
+        document.getElementById('qualification-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const formObject = {};
+            
+            formData.forEach((value, key) => {
+                // Handle multiple checkboxes
+                if (key === 'technologies') {
+                    if (!formObject[key]) {
+                        formObject[key] = [];
+                    }
+                    formObject[key].push(value);
+                } else {
+                    formObject[key] = value;
+                }
+            });
+            
+            // Calculate lead score
+            let leadScore = 0;
+            
+            // Company size scoring
+            const companySize = formObject.company_size;
+            if (companySize === '$1M - $5M') leadScore += 2;
+            else if (companySize === '$5M - $20M') leadScore += 3;
+            else if (companySize === '$20M+') leadScore += 4;
+            
+            // Budget scoring
+            const budget = formObject.budget;
+            if (budget === '$50k - $100k') leadScore += 2;
+            else if (budget === '$100k - $200k') leadScore += 3;
+            else if (budget === '$200k - $500k') leadScore += 4;
+            else if (budget === '$500k+') leadScore += 5;
+            
+            // Role scoring
+            const role = formObject.role;
+            if (role === 'C-Suite' || role === 'VP') leadScore += 3;
+            else if (role === 'Manager') leadScore += 2;
+            
+            // Decision timeline scoring
+            const decisionTimeline = formObject.decision_timeline;
+            if (decisionTimeline === 'Immediate') leadScore += 4;
+            else if (decisionTimeline === '1-4 weeks') leadScore += 3;
+            else if (decisionTimeline === '1-3 months') leadScore += 2;
+            
+            formObject.leadScore = leadScore;
+            formObject.leadPriority = leadScore >= 10 ? 'High' : (leadScore >= 6 ? 'Medium' : 'Low');
+            
+            // Log the form data and score (would be replaced with actual submission)
+            console.log('Form Data:', formObject);
+            console.log('Lead Score:', leadScore);
+            console.log('Lead Priority:', formObject.leadPriority);
+            
+            // Here you would send the data to your server or HubSpot
+            // For example:
+            /*
+            fetch('/api/submit-lead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formObject)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                showThanksMessage();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+            */
+            
+            // For now, just show the thanks message
+            showThanksMessage();
+        });
+        
+        function showThanksMessage() {
+            document.getElementById('section-4').classList.remove('active');
+            document.getElementById('section-4').classList.add('hidden');
+            document.getElementById('thanks-section').classList.remove('hidden');
+            document.getElementById('thanks-section').classList.add('active');
+            document.getElementById('progress-bar').style.width = '100%';
+        }
+        
+        // Reset form field styles on input
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = '';
+                const label = document.querySelector(`label[for="${this.id}"]`);
+                if (label) {
+                    label.style.color = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
