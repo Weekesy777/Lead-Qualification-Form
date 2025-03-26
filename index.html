@@ -357,9 +357,64 @@
                     <button type="button" class="btn" onclick="nextSection(3, 4)">Continue</button>
                 </div>
             </div>
+
+            <div class="form-section hidden" id="section-4">
+                <h2><span>4</span>Tell us about your decision-makers</h2>
+                <div class="form-group">
+                    <label>Who will be involved in the final decision?*</label>
+                    <div class="stakeholder-group">
+                        <div class="stakeholder-input">
+                            <input type="text" name="stakeholder_1_name" placeholder="Name">
+                            <input type="text" name="stakeholder_1_role" placeholder="Role/Title">
+                            <input type="email" name="stakeholder_1_email" placeholder="Email">
+                        </div>
+                        <div class="stakeholder-input">
+                            <input type="text" name="stakeholder_2_name" placeholder="Name">
+                            <input type="text" name="stakeholder_2_role" placeholder="Role/Title">
+                            <input type="email" name="stakeholder_2_email" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Decision-Making Process*</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="decision_process" id="decision-1" value="Single Decision Maker" required>
+                            <label for="decision-1" class="radio-label">Single Decision Maker</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="decision_process" id="decision-2" value="Committee Decision" required>
+                            <label for="decision-2" class="radio-label">Committee/Multiple Approvers</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="decision_process" id="decision-3" value="Consensus Required" required>
+                            <label for="decision-3" class="radio-label">Consensus Required</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stakeholder_influence">Who has the most influence on this decision?*</label>
+                    <select id="stakeholder_influence" name="stakeholder_influence" required>
+                        <option value="" disabled selected>Select primary decision influencer</option>
+                        <option value="CEO">CEO</option>
+                        <option value="CTO">CTO</option>
+                        <option value="CFO">CFO</option>
+                        <option value="IT Director">IT Director</option>
+                        <option value="Department Head">Department Head</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-nav">
+                    <button type="button" class="btn btn-outline" onclick="prevSection(4, 3)">Back</button>
+                    <button type="button" class="btn" onclick="nextSection(4, 5)">Continue</button>
+                </div>
+            </div>
             
             <!-- Section 4: Technical Details -->
-            <div class="form-section hidden" id="section-4">
+            <div class="form-section hidden" id="section-5">
                 <h2><span>4</span>Tell us about your technical needs</h2>
                 <div class="form-group">
                     <label>Current Situation*</label>
@@ -573,8 +628,8 @@
         });
         
         function showThanksMessage() {
-            document.getElementById('section-4').classList.remove('active');
-            document.getElementById('section-4').classList.add('hidden');
+            document.getElementById('section-5').classList.remove('active');
+            document.getElementById('section-5').classList.add('hidden');
             document.getElementById('thanks-section').classList.remove('hidden');
             document.getElementById('thanks-section').classList.add('active');
             document.getElementById('progress-bar').style.width = '100%';
