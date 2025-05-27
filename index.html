@@ -625,8 +625,8 @@
             
             // Here you would send the data to your server or HubSpot
             // For example:
-            /*
-            fetch('/api/submit-lead', {
+            
+            fetch('https://prod-16.australiaeast.logic.azure.com:443/workflows/6645f3707c29498597b22bdabaf42e5b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZX046lx8OCTumatXnaQROrJ2Gep0ZQcYm7b3HNf_8vc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -641,10 +641,10 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
-            */
+            
             
             // For now, just show the thanks message
-            showThanksMessage();
+            //showThanksMessage();
         });
         
         function showThanksMessage() {
